@@ -28,3 +28,18 @@
     </div>
   </div>
 </template>
+
+<script lang ="ts">
+export default {
+  methods: {
+    async test() {
+      await this.a()
+    },
+
+    async a(){
+      return 'a'
+    }
+  }
+};
+
+</script>
