@@ -9,6 +9,8 @@
     />
     <link rel="stylesheet" href="https://unpkg.com/vue-material/dist/vue-material.min.css" />
     <link rel="stylesheet" href="https://unpkg.com/vue-material/dist/theme/default.css" />
+
+  <!-- https://github.com/ajaxorg/ace -->
   </head>
 
   <body>
@@ -25,7 +27,7 @@
 
 <style lang="scss">
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -48,7 +50,12 @@
 
 <script lang ="ts">
 import Vue from "vue";
-import { MdButton, MdContent, MdTabs, MdCard } from "vue-material/dist/components";
+import {
+  MdButton,
+  MdContent,
+  MdTabs,
+  MdCard
+} from "vue-material/dist/components";
 import "vue-material/dist/vue-material.min.css";
 import "vue-material/dist/theme/default.css";
 
@@ -56,6 +63,5 @@ Vue.use(MdButton);
 Vue.use(MdContent);
 Vue.use(MdTabs);
 Vue.use(MdCard);
-export default {
-};
+export default {};
 </script>>
