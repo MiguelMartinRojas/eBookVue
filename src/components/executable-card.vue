@@ -1,35 +1,41 @@
 <template>
   <div>
     <md-card md-with-hover>
-        <md-card-header>
-          <div class="md-title">{{title}}</div>
-          <div class="md-subhead">{{subTitle}}</div>
-        </md-card-header>
+      <md-card-header>
+        <div class="md-title">{{title}}</div>
+        <div class="md-subhead">{{subTitle}}</div>
+      </md-card-header>
 
-        <md-card-content>
-          <text-area content ="Text area content"></text-area>
-        </md-card-content>
-        <md-card-actions>
-          <md-button class="md-raised md-accent">Run</md-button>
-        </md-card-actions>
+      <md-card-content>
+        <text-area ></text-area>
+      </md-card-content>
+      <md-card-actions>
+        <md-button class="md-raised md-accent" v-on:click="runScript">Run</md-button>
+      </md-card-actions>
     </md-card>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
 import TextArea from "@/components/text-area.vue";
-
-@Component({
+import { eventHub } from '@/components/eventHub'
+export default {
   components: { TextArea },
+  
+  props: {
+    title: {
+      type: String
+    },
+    subTitle: {
+      type: String
+    }
+  },
   methods: {
-    
+    runScript() {
+      eventHub.$emit('execute-code-1')
+    }
   }
-})
-export default class ExecutableCard extends Vue {
-  @Prop() private title!: string;
-  @Prop() private subTitle!: string;
-}
+};
 </script>
 
 

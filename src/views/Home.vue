@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
     <ExecutableCard title="Exercise title" subTitle="exercise subTitle" />
   </div>
 </template>

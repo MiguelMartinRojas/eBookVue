@@ -9,8 +9,6 @@
     />
     <link rel="stylesheet" href="https://unpkg.com/vue-material/dist/vue-material.min.css" />
     <link rel="stylesheet" href="https://unpkg.com/vue-material/dist/theme/default.css" />
-
-  <!-- https://github.com/ajaxorg/ace -->
   </head>
 
   <body>
