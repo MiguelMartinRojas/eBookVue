@@ -1,16 +1,19 @@
 <template>
-  <div>
+  <div class ="card">
     <md-card md-with-hover>
       <md-card-header>
-        <div class="md-title">{{title}}</div>
-        <div class="md-subhead">{{subTitle}}</div>
+        <div class="md-title">{{task.title}}</div>
+        <div class="md-subhead">{{task.subTitle}}</div>
       </md-card-header>
-
       <md-card-content>
-        <text-area ></text-area>
+        <text-area
+          :contentHtml="task.contentHtml"
+          :contentJavacript="task.contentJavascript"
+          :contentCss="task.contentCss"
+        ></text-area>
       </md-card-content>
       <md-card-actions>
-        <md-button class="md-raised md-accent" v-on:click="runScript">Run</md-button>
+        <md-button class="md-raised md-accent" v-on:click="runScript">Ejecutar</md-button>
       </md-card-actions>
     </md-card>
   </div>
@@ -18,26 +21,21 @@
 
 <script lang="ts">
 import TextArea from "@/components/text-area.vue";
-import { eventHub } from '@/components/eventHub'
+import { eventHub } from "@/components/eventHub";
+
 export default {
   components: { TextArea },
-  
   props: {
-    title: {
-      type: String
+    task: {
     },
-    subTitle: {
-      type: String
-    }
   },
   methods: {
     runScript() {
-      eventHub.$emit('execute-code-1')
+      eventHub.$emit("execute-code-1");
     }
   }
 };
 </script>
-
 
 <style lang="scss" scoped>
 .md-card {
@@ -45,5 +43,8 @@ export default {
   margin: 4px;
   display: inline-block;
   vertical-align: top;
+}
+.card{
+  width: 100%;
 }
 </style>

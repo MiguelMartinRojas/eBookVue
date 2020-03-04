@@ -30,7 +30,8 @@
     "sass": "^1.23.7",
     "sass-loader": "^8.0.0",
     "typescript": "~3.5.3",
-    "vue-template-compiler": "^2.6.10",
+    "vue-svg-loader": "^0.16.0",
+    "vue-template-compiler": "^2.6.11",
     "vue2-ace-editor": "0.0.15"
   }
 }
