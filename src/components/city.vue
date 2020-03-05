@@ -3,7 +3,7 @@
     <md-button v-on:click="collapseExpand" class="md-raised md-primary">Expand</md-button>
     <div class="fake-background" v-bind:class="{'collapsible-content':collapsed }">
       <div class="city-wrap">
-        <div class="city-container">
+        <div class="city-container" style= "--mouse-x:90; --mouse-y:19;">
           <div class="city" v-bind:class="{'collapsible-content':collapsed }">
             <background class="background"></background>
             <park style="top:500px; right:48px;" class="building-4"></park>
@@ -59,6 +59,8 @@ export default {
   position: fixed;
   right: 0px;
   top: -100px;
+  display: inline-block;
+  overflow: hidden;
 }
 .city-container {
   display: flex;

@@ -1,0 +1,7 @@
+{
+    "title": "Ejercicio 1 titulo",
+    "subTitle":"Subtitulo del ejercicio 1",
+    "contentJavascript": "//Javascript \n var a = 1; \n document.getElementById('ej1').textContent = a; \n",
+    "contentHtml": "<!-- Html --> \n <!DOCTYPE html> \n <div id=ej1 class='estilo1'></div> \n",
+    "contentCss": "/*Css*/ \n .estilo1{ \n\t font-weight: bold; \n}\n"
+}
