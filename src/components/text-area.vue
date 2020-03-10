@@ -51,7 +51,7 @@ export default {
       result: ""
     };
   },
-  props: ["contentJavacript", "contentHtml", "contentCss"],
+  props: ["contentJavacript", "contentHtml", "contentCss", "id"],
   computed: {
     inputContentJavacript: {
       get() {
@@ -149,10 +149,10 @@ export default {
     }
   },
   created() {
-    eventHub.$on("execute-code-1", this.executeCode);
+    eventHub.$on("execute-code-"+this.id, this.executeCode);
   },
   beforeDestroy() {
-    eventHub.$off("execute-code-1", this.executeCode);
+    eventHub.$off("execute-code-"+this.id, this.executeCode);
   }
 };
 </script>

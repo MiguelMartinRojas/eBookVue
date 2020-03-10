@@ -1,19 +1,35 @@
 <template>
-  <div class ="card">
+  <div class="card">
     <md-card md-with-hover>
       <md-card-header>
-        <div class="md-title">{{task.title}}</div>
-        <div class="md-subhead">{{task.subTitle}}</div>
+        <div v-if="!edition" class="md-title">{{task.title}}</div>
+        <form v-else autocomplete="off">
+          <md-field>
+            <label>Titulo ejercicio</label>
+            <md-input v-model="task.title"></md-input>
+          </md-field>
+        </form>
+        <div v-if="!edition" class="md-subhead">{{task.subTitle}}</div>
+        <form v-else autocomplete="off">
+          <md-field>
+            <label>Enunciado del ejercicio</label>
+            <md-input v-model="task.subTitle"></md-input>
+          </md-field>
+        </form>
       </md-card-header>
       <md-card-content>
         <text-area
           :contentHtml="task.contentHtml"
           :contentJavacript="task.contentJavascript"
           :contentCss="task.contentCss"
+          :edition="edition"
+          :id="id"
         ></text-area>
       </md-card-content>
       <md-card-actions>
-        <md-button class="md-raised md-accent" v-on:click="runScript">Ejecutar</md-button>
+        <md-button class="md-fab  md-primary" v-on:click="runScript">
+          <md-icon>play_arrow</md-icon>
+        </md-button>
       </md-card-actions>
     </md-card>
   </div>
@@ -26,12 +42,15 @@ import { eventHub } from "@/components/eventHub";
 export default {
   components: { TextArea },
   props: {
-    task: {
+    task: {},
+    edition: {
+      type: Boolean
     },
+    id: {}
   },
   methods: {
     runScript() {
-      eventHub.$emit("execute-code-1");
+      eventHub.$emit("execute-code-"+this.id);
     }
   }
 };
@@ -44,7 +63,7 @@ export default {
   display: inline-block;
   vertical-align: top;
 }
-.card{
+.card {
   width: 100%;
 }
 </style>
