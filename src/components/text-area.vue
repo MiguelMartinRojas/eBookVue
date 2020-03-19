@@ -51,30 +51,30 @@ export default {
       result: ""
     };
   },
-  props: ["contentJavacript", "contentHtml", "contentCss", "id"],
+  props: { task: {}, id: Number, edition: Boolean},
   computed: {
     inputContentJavacript: {
       get() {
-        return this.contentJavacript;
+        return this.task.contentJavascript;
       },
       set(val) {
-        this.$emit("contentJavacript", val);
+        this.task.contentJavascript = val;
       }
     },
     inputContentHtml: {
       get() {
-        return this.contentHtml;
+        return this.task.contentHtml;
       },
       set(val) {
-        this.$emit("inputContentHtml", val);
+        this.task.contentHtml = val;
       }
     },
     inputContentCss: {
       get() {
-        return this.contentCss;
+        return this.task.contentCss;
       },
       set(val) {
-        this.$emit("inputContentCss", val);
+        this.task.contentCss = val;
       }
     }
   },
@@ -149,10 +149,12 @@ export default {
     }
   },
   created() {
-    eventHub.$on("execute-code-"+this.id, this.executeCode);
+    // eslint-disable-next-line no-console
+    console.log("execute-code-" + this.id);
+    eventHub.$on("execute-code-" + this.id, this.executeCode);
   },
   beforeDestroy() {
-    eventHub.$off("execute-code-"+this.id, this.executeCode);
+    eventHub.$off("execute-code-" + this.id, this.executeCode);
   }
 };
 </script>

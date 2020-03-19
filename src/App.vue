@@ -14,8 +14,10 @@
   <body>
     <div id="app">
       <div id="nav">
-        <router-link to="/">Home</router-link>|
-        <router-link to="/edit-exercise">Edit Exercise</router-link>
+        <div>
+          <router-link to="/">Home</router-link>|
+          <router-link to="/edit-exercise">Edit Exercise</router-link>
+        </div>
       </div>
       <router-view />
     </div>
@@ -34,7 +36,9 @@
 
 #nav {
   padding: 30px;
-
+  > div {
+    display: flex;
+  }
   a {
     font-weight: bold;
     color: #2c3e50;
@@ -54,7 +58,7 @@ import Vue from "vue";
 //   MdTabs,
 //   MdCard,
 // } from "vue-material/dist/components";
-import VueMaterial from 'vue-material'
+import VueMaterial from "vue-material";
 import "vue-material/dist/vue-material.min.css";
 import "vue-material/dist/theme/default.css";
 
@@ -62,6 +66,6 @@ import "vue-material/dist/theme/default.css";
 // Vue.use(MdContent);
 // Vue.use(MdTabs);
 // Vue.use(MdCard);
-Vue.use(VueMaterial)
+Vue.use(VueMaterial);
 export default {};
 </script>>
