@@ -52,20 +52,17 @@
 
 <script lang ="ts">
 import Vue from "vue";
-// import {
-//   MdButton,
-//   MdContent,
-//   MdTabs,
-//   MdCard,
-// } from "vue-material/dist/components";
 import VueMaterial from "vue-material";
 import "vue-material/dist/vue-material.min.css";
 import "vue-material/dist/theme/default.css";
+import VueKonva from "vue-konva";
 
-// Vue.use(MdButton);
-// Vue.use(MdContent);
-// Vue.use(MdTabs);
-// Vue.use(MdCard);
 Vue.use(VueMaterial);
+Vue.use(VueKonva);
+var game = JSON.parse(localStorage.getItem("game"));
+if (!game) {
+  localStorage.setItem("game", JSON.stringify([]));
+}
+
 export default {};
 </script>>

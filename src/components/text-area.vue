@@ -8,7 +8,6 @@
       <editor v-model="inputContentCss" @init="initCssEditor" lang="css"></editor>
     </div>
     <div class="output">
-      <span>Salida:</span>
       <iframe ref="iframe" style="border:none; width:100%" v-on:load="onLoadIframe"></iframe>
       <div id="error" class="error"></div>
     </div>
@@ -48,33 +47,42 @@ export default {
       myEditorJavascript: null,
       myEditorHtml: null,
       myEditorCss: null,
-      result: ""
+      result: "",
+      myTask: null
     };
   },
-  props: { task: {}, id: Number, edition: Boolean},
+  props: { task: {}, solution: {}, id: Number, edition: Boolean },
   computed: {
     inputContentJavacript: {
       get() {
-        return this.task.contentJavascript;
+        return this.inputTask.contentJavascript;
       },
       set(val) {
-        this.task.contentJavascript = val;
+        this.inputTask.contentJavascript = val;
       }
     },
     inputContentHtml: {
       get() {
-        return this.task.contentHtml;
+        return this.inputTask.contentHtml;
       },
       set(val) {
-        this.task.contentHtml = val;
+        this.inputTask.contentHtml = val;
       }
     },
     inputContentCss: {
       get() {
-        return this.task.contentCss;
+        return this.inputTask.contentCss;
       },
       set(val) {
-        this.task.contentCss = val;
+        this.inputTask.contentCss = val;
+      }
+    },
+    inputTask: {
+      get() {
+        return this.myTask;
+      },
+      set(val) {
+        this.myTask = val;
       }
     }
   },
@@ -125,11 +133,19 @@ export default {
       this.result = "";
       doc.open();
       doc.write(`<style ${cssType}>` + cssCode + "<" + "/style>");
-      doc.write(htmlCode);
+      doc.write(`<h3> Salida:</h3><div>` + htmlCode + `<div>`);
       doc.write(
-        `<script ${javacriptType}>` + javascriptCode + "<" + "/script>"
+        `<script ${javacriptType}>` +
+          javascriptCode +
+          "<" +
+          "/script>" +
+          `<script ${javacriptType}>` +
+          this.solution.contentJavascript +
+          "<" +
+          "/script>"
       );
       doc.close();
+      this.setScore();
     },
     overrideConsoleOutput(myWindow) {
       // eslint-disable-next-line no-console
@@ -146,12 +162,49 @@ export default {
         // call original method
         return originalConsoleError.apply(this, args);
       };
+    },
+    setScore() {
+      this.insertOrReplaceTask();
+      var doc = this.$refs.iframe.contentWindow.document;
+      var score = doc.getElementById("score");
+      score.setAttribute("style", "position:absolute;bottom:0;right:0");
+
+      eventHub.$emit("unlock-building", {
+        score: parseInt(score.innerText),
+        area: "green",
+        title: this.inputTask.title
+      });
+    },
+    insertOrReplaceTask() {
+      var game = JSON.parse(localStorage.getItem("game"));
+      var index = game.findIndex(
+        element => element.title == this.inputTask.title
+      );
+      if (index !== -1) {
+        game[index] = this.inputTask;
+      } else {
+        game.push(this.inputTask);
+      }
+      localStorage.setItem("game", JSON.stringify(game));
+    },
+    initializeGame() {
+      var game = JSON.parse(localStorage.getItem("game"));
+      if (game.find(element => element.title == this.inputTask.title)) {
+        this.inputTask = game.find(
+          element => element.title == this.inputTask.title
+        );
+      }
     }
   },
   created() {
     // eslint-disable-next-line no-console
     console.log("execute-code-" + this.id);
     eventHub.$on("execute-code-" + this.id, this.executeCode);
+    eventHub.$on("game-changed", this.initializeGame);
+    this.inputTask = this.task;
+  },
+  mounted() {
+    this.initializeGame()
   },
   beforeDestroy() {
     eventHub.$off("execute-code-" + this.id, this.executeCode);

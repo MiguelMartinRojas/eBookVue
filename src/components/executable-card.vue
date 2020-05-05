@@ -18,7 +18,7 @@
         </form>
       </md-card-header>
       <md-card-content>
-        <text-area :task="task" :edition="edition" :id="id"></text-area>
+        <text-area :task="task" :solution="solution"  :edition="edition" :id="id"></text-area>
       </md-card-content>
       <md-card-actions>
         <md-button class="md-fab md-primary" v-on:click="back">
@@ -43,6 +43,7 @@ export default {
   components: { TextArea },
   props: {
     task: {},
+    solution: {},
     edition: {
       type: Boolean
     },
