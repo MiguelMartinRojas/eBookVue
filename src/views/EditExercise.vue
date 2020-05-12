@@ -5,11 +5,11 @@
         <div class="menu-container">
           <div style="display:flex; justify-content: space-between;">
             <md-field>
-              <label>Select exercise file</label>
+              <label>Selecciona actividad ya guardada</label>
               <md-file v-model="taskFile" @md-change="openExerciseFile" />
             </md-field>
             <md-field>
-              <label>Titulo ejercicio</label>
+              <label>Nombre del fichero</label>
               <md-input v-model="taskFile"></md-input>
             </md-field>
             <md-button class="md-fab" v-on:click="save(0)">
@@ -25,11 +25,11 @@
         <div class="menu-container">
           <div style="display:flex; justify-content: space-between;">
             <md-field>
-              <label>Select solution file</label>
+              <label>Selecciona la solución de la actividad</label>
               <md-file v-model="taskSolutionFile" @md-change="openSolutionFile" />
             </md-field>
             <md-field>
-              <label>Titulo ejercicio</label>
+              <label>Nombre del fichero</label>
               <md-input v-model="taskSolutionFile"></md-input>
             </md-field>
             <md-button class="md-fab" v-on:click="save(1)">

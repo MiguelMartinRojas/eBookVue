@@ -19,7 +19,7 @@
 import { eventHub } from "@/components/eventHub";
 import Konva from "konva";
 
-const Park = "../park.svg";
+const Broken = "../break.svg";
 const House1 = "../house1.svg";
 const House12 = "../house12.svg";
 const House13 = "../house13.svg";
@@ -236,7 +236,20 @@ export default {
           height: 32,
           x: x,
           y: y,
-          id: id+''
+          id: id + ""
+        });
+      });
+    },
+    drawMediumHouse(name, x, y, id) {
+      var me = this;
+      Konva.Image.fromURL(name, image => {
+        me.$refs.layer.getNode().add(image);
+        image.setAttrs({
+          width: 64,
+          height: 64,
+          x: x,
+          y: y,
+          id: id + ""
         });
       });
     },
@@ -249,7 +262,7 @@ export default {
           height: 96,
           x: x,
           y: y,
-          id: id+''
+          id: id + ""
         });
       });
     },
@@ -274,10 +287,10 @@ export default {
         var building = this.pointsSmall[
           Math.floor(Math.random() * this.pointsSmall.length)
         ];
-        this.destroyBuilding(task.building.id)
+        this.destroyBuilding(task.building.id);
         task.building = {
           id: building.id,
-          name: House12,
+          name: Broken,
           type: 1,
           zone: building.zone
         };
@@ -293,7 +306,7 @@ export default {
         var building = this.pointsSmall[
           Math.floor(Math.random() * this.pointsSmall.length)
         ];
-        this.destroyBuilding(task.building.id)
+        this.destroyBuilding(task.building.id);
         task.building = {
           id: building.id,
           name: House12,
@@ -312,7 +325,7 @@ export default {
         var building = this.pointsBig[
           Math.floor(Math.random() * this.pointsBig.length)
         ];
-        this.destroyBuilding(task.building.id)
+        this.destroyBuilding(task.building.id);
         task.building = {
           id: building.id,
           name: House13,
@@ -331,7 +344,7 @@ export default {
         var building = this.pointsBig[
           Math.floor(Math.random() * this.pointsBig.length)
         ];
-        this.destroyBuilding(task.building.id)
+        this.destroyBuilding(task.building.id);
         task.building = {
           id: building.id,
           name: House2,
@@ -435,17 +448,26 @@ export default {
         xOffset = -15;
         yOffset = 15;
       }
-      this.drawBigHouse(
-        building.name,
-        this.pointsBig[group].x + xOffset - 60 * (index - group),
-        this.pointsBig[group].y + yOffset + 34 * (index - group),
-        building.id
-      );
+      if (building.type === 4) {
+        this.drawBigHouse(
+          building.name,
+          this.pointsBig[group].x + xOffset - 60 * (index - group),
+          this.pointsBig[group].y + yOffset + 34 * (index - group),
+          building.id
+        );
+      } else if (building.type === 3) {
+        this.drawMediumHouse(
+          building.name,
+          this.pointsBig[group].x + xOffset - 60 * (index - group),
+          this.pointsBig[group].y + yOffset + 34 * (index - group),
+          building.id
+        );
+      }
     },
     destroyBuilding(id) {
       this.$refs.stage
         .getNode()
-        .find('#'+id)[0]
+        .find("#" + id)[0]
         .destroy();
       this.$refs.stage.getNode().batchDraw();
     }

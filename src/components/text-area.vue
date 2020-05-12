@@ -52,6 +52,11 @@ export default {
     };
   },
   props: { task: {}, solution: {}, id: Number, edition: Boolean },
+  watch: {
+    task: function(newVal, oldVal) {
+      this.myTask = newVal;
+    }
+  },
   computed: {
     inputContentJavacript: {
       get() {
@@ -107,7 +112,7 @@ export default {
       if (language === "html") {
         require("brace/mode/html");
       } else if (language === "javascript") {
-        require("brace/mode/javascript"); //language
+        require("brace/mode/javascript");
       } else {
         require("brace/mode/css");
       }
@@ -134,15 +139,21 @@ export default {
       doc.open();
       doc.write(`<style ${cssType}>` + cssCode + "<" + "/style>");
       doc.write(`<h3> Salida:</h3><div>` + htmlCode + `<div>`);
+
+      var solutionJavascript = "";
+      if (this.solution) {
+        solutionJavascript =
+          `<script ${javacriptType}>` +
+          this.solution.contentJavascript +
+          "<" +
+          "/script>";
+      }
       doc.write(
         `<script ${javacriptType}>` +
           javascriptCode +
           "<" +
           "/script>" +
-          `<script ${javacriptType}>` +
-          this.solution.contentJavascript +
-          "<" +
-          "/script>"
+          solutionJavascript
       );
       doc.close();
       this.setScore();
@@ -164,16 +175,18 @@ export default {
       };
     },
     setScore() {
-      this.insertOrReplaceTask();
-      var doc = this.$refs.iframe.contentWindow.document;
-      var score = doc.getElementById("score");
-      score.setAttribute("style", "position:absolute;bottom:0;right:0");
-
-      eventHub.$emit("unlock-building", {
-        score: parseInt(score.innerText),
-        area: "green",
-        title: this.inputTask.title
-      });
+      if (!this.edition) {
+        var doc = this.$refs.iframe.contentWindow.document;
+        var score = doc.getElementById("score");
+        score.setAttribute("style", "position:absolute;bottom:0;right:0");
+        this.insertOrReplaceTask();
+        eventHub.$emit("unlock-building", {
+          score: parseInt(score.innerText),
+          area: "green",
+          title: this.inputTask.title
+        });
+        
+      }
     },
     insertOrReplaceTask() {
       var game = JSON.parse(localStorage.getItem("game"));
@@ -197,17 +210,22 @@ export default {
     }
   },
   created() {
-    // eslint-disable-next-line no-console
-    console.log("execute-code-" + this.id);
     eventHub.$on("execute-code-" + this.id, this.executeCode);
-    eventHub.$on("game-changed", this.initializeGame);
+    if (!this.edition) {
+      eventHub.$on("game-changed", this.initializeGame);
+    }
     this.inputTask = this.task;
   },
   mounted() {
-    this.initializeGame()
+    if (!this.edition) {
+      this.initializeGame();
+    }
   },
   beforeDestroy() {
     eventHub.$off("execute-code-" + this.id, this.executeCode);
+    if (!this.edition) {
+      eventHub.$on("game-changed", this.initializeGame);
+    }
   }
 };
 </script>

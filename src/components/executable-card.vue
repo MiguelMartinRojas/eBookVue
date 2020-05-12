@@ -21,13 +21,13 @@
         <text-area :task="task" :solution="solution"  :edition="edition" :id="id"></text-area>
       </md-card-content>
       <md-card-actions>
-        <md-button class="md-fab md-primary" v-on:click="back">
+        <md-button class="md-fab md-primary" v-if="!edition" v-on:click="back">
           <md-icon>arrow_back</md-icon>
         </md-button>
         <md-button class="md-fab md-accent" v-on:click="runScript">
           <md-icon>play_arrow</md-icon>
         </md-button>
-        <md-button class="md-fab md-primary" v-on:click="next">
+        <md-button class="md-fab md-primary" v-if="!edition" v-on:click="next">
           <md-icon>arrow_forward</md-icon>
         </md-button>
       </md-card-actions>
