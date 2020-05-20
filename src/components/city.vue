@@ -273,7 +273,7 @@ export default {
         this.unlockBrokenBuilding(area, task);
       } else if (score <= 50) {
         this.unlockSmallBuilding(area, task);
-      } else if (score <= 75) {
+      } else if (score <= 80) {
         this.unlockMediumBuilding(area, task);
       } else {
         this.unlockBigBuilding(area, task);
@@ -284,15 +284,20 @@ export default {
         !task.building ||
         (task.building.type !== 1 && task.building.type !== 1)
       ) {
-        var building = this.pointsSmall[
-          Math.floor(Math.random() * this.pointsSmall.length)
+        var unlockedBuilding = this.pointsSmall.filter(
+          point => point.zone === area
+        )[
+          Math.floor(
+            Math.random() *
+              this.pointsSmall.filter(point => point.zone === area).length
+          )
         ];
-        this.destroyBuilding(task.building.id);
+        if (task.building) this.destroyBuilding(task.building.id);
         task.building = {
-          id: building.id,
+          id: unlockedBuilding.id,
           name: Broken,
           type: 1,
-          zone: building.zone
+          zone: unlockedBuilding.zone
         };
         this.insertOrReplaceTask(task);
         this.drawBuilding(task.building);
@@ -303,15 +308,20 @@ export default {
         !task.building ||
         (task.building.type !== 2 && task.building.type !== 2)
       ) {
-        var building = this.pointsSmall[
-          Math.floor(Math.random() * this.pointsSmall.length)
+        var unlockedBuilding = this.pointsSmall.filter(
+          point => point.zone === area
+        )[
+          Math.floor(
+            Math.random() *
+              this.pointsSmall.filter(point => point.zone === area).length
+          )
         ];
-        this.destroyBuilding(task.building.id);
+        if (task.building) this.destroyBuilding(task.building.id);
         task.building = {
-          id: building.id,
+          id: unlockedBuilding.id,
           name: House12,
           type: 2,
-          zone: building.zone
+          zone: unlockedBuilding.zone
         };
         this.insertOrReplaceTask(task);
         this.drawBuilding(task.building);
@@ -322,15 +332,20 @@ export default {
         !task.building ||
         (task.building.type !== 3 && task.building.type !== 3)
       ) {
-        var building = this.pointsBig[
-          Math.floor(Math.random() * this.pointsBig.length)
+        var unlockedBuilding = this.pointsBig.filter(
+          point => point.zone === area
+        )[
+          Math.floor(
+            Math.random() *
+              this.pointsBig.filter(point => point.zone === area).length
+          )
         ];
-        this.destroyBuilding(task.building.id);
+        if (task.building) this.destroyBuilding(task.building.id);
         task.building = {
-          id: building.id,
+          id: unlockedBuilding.id,
           name: House13,
           type: 3,
-          zone: building.zone
+          zone: area
         };
         this.insertOrReplaceTask(task);
         this.drawBuilding(task.building);
@@ -341,15 +356,20 @@ export default {
         !task.building ||
         (task.building.type !== 4 && task.building.type !== 4)
       ) {
-        var building = this.pointsBig[
-          Math.floor(Math.random() * this.pointsBig.length)
+        var unlockedBuilding = this.pointsBig.filter(
+          point => point.zone === area
+        )[
+          Math.floor(
+            Math.random() *
+              this.pointsBig.filter(point => point.zone === area).length
+          )
         ];
-        this.destroyBuilding(task.building.id);
+        if (task.building) this.destroyBuilding(task.building.id);
         task.building = {
-          id: building.id,
+          id: unlockedBuilding.id,
           name: House2,
           type: 4,
-          zone: building.zone
+          zone: unlockedBuilding.zone
         };
         this.insertOrReplaceTask(task);
         this.drawBuilding(task.building);
@@ -465,10 +485,11 @@ export default {
       }
     },
     destroyBuilding(id) {
-      this.$refs.stage
-        .getNode()
-        .find("#" + id)[0]
-        .destroy();
+      if (this.$refs.stage) {
+        var node = this.$refs.stage.getNode().find("#" + id)[0];
+        if (node) node.destroy();
+      }
+
       this.$refs.stage.getNode().batchDraw();
     }
   },

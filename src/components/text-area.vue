@@ -1,7 +1,7 @@
 
 <template>
   <div>
-    <div class="editor-container">
+    <div class="editor-container" style="margin-top: 5px;">
       <!-- https://github.com/ajaxorg/ace -->
       <editor v-model="inputContentJavacript" @init="initJavascriptEditor" lang="javascript"></editor>
       <editor v-model="inputContentHtml" @init="initHtmlEditor" lang="html"></editor>
@@ -40,6 +40,10 @@
 
 <script lang="ts">
 import { eventHub } from "@/components/eventHub";
+const solutionHeader = `var element = document.createElement('div');
+element.setAttribute("id", "score");`;
+const solutionFooter = `element.innerHTML = score;
+document.body.appendChild(element);`;
 
 export default {
   data() {
@@ -54,7 +58,16 @@ export default {
   props: { task: {}, solution: {}, id: Number, edition: Boolean },
   watch: {
     task: function(newVal, oldVal) {
+      this.cleanOutputIframe()
       this.myTask = newVal;
+      if (!this.edition) {
+        var game = JSON.parse(localStorage.getItem("game"));
+        if (game.find(element => element.title == this.inputTask.title)) {
+          this.inputTask = game.find(
+            element => element.title == this.inputTask.title
+          );
+        }
+      }
     }
   },
   computed: {
@@ -144,7 +157,9 @@ export default {
       if (this.solution) {
         solutionJavascript =
           `<script ${javacriptType}>` +
+          solutionHeader +
           this.solution.contentJavascript +
+          solutionFooter +
           "<" +
           "/script>";
       }
@@ -157,6 +172,14 @@ export default {
       );
       doc.close();
       this.setScore();
+    },
+    cleanOutputIframe() {
+      var iframe = this.$refs.iframe;
+      var html = "";
+
+      iframe.contentWindow.document.open();
+      iframe.contentWindow.document.write(html);
+      iframe.contentWindow.document.close();
     },
     overrideConsoleOutput(myWindow) {
       // eslint-disable-next-line no-console
@@ -182,10 +205,9 @@ export default {
         this.insertOrReplaceTask();
         eventHub.$emit("unlock-building", {
           score: parseInt(score.innerText),
-          area: "green",
+          area: this.inputTask.zone,
           title: this.inputTask.title
         });
-        
       }
     },
     insertOrReplaceTask() {

@@ -5,12 +5,21 @@
         <div class="menu-container">
           <div style="display:flex; justify-content: space-between;">
             <md-field>
-              <label>Selecciona actividad ya guardada</label>
+              <label>Elige actividad</label>
               <md-file v-model="taskFile" @md-change="openExerciseFile" />
             </md-field>
             <md-field>
               <label>Nombre del fichero</label>
               <md-input v-model="taskFile"></md-input>
+            </md-field>
+            <md-field style="width: 75px;">
+              <label for="zona">Zona</label>
+              <md-select v-model="zone1" name="zona" id="zona">
+                <md-option value="red">Roja</md-option>
+                <md-option value="green">Verde</md-option>
+                <md-option value="blue">Azul</md-option>
+                <md-option value="yellow">Amarillo</md-option>
+              </md-select>
             </md-field>
             <md-button class="md-fab" v-on:click="save(0)">
               <md-icon>save</md-icon>
@@ -25,12 +34,21 @@
         <div class="menu-container">
           <div style="display:flex; justify-content: space-between;">
             <md-field>
-              <label>Selecciona la solución de la actividad</label>
+              <label>Elige la solución</label>
               <md-file v-model="taskSolutionFile" @md-change="openSolutionFile" />
             </md-field>
             <md-field>
               <label>Nombre del fichero</label>
               <md-input v-model="taskSolutionFile"></md-input>
+            </md-field>
+            <md-field style="width: 75px;">
+              <label for="zona">Zona</label>
+              <md-select v-model="zone2" name="zona" id="zona">
+                <md-option value="red">Roja</md-option>
+                <md-option value="green">Verde</md-option>
+                <md-option value="blue">Azul</md-option>
+                <md-option value="yellow">Amarillo</md-option>
+              </md-select>
             </md-field>
             <md-button class="md-fab" v-on:click="save(1)">
               <md-icon>save</md-icon>
@@ -63,6 +81,8 @@ export default {
       task: fileTemplate,
       taskSolution: fileTemplate,
       taskFile: null,
+      zone1: "red",
+      zone2: "red",
       taskSolutionFile: null
     };
   },
@@ -82,6 +102,12 @@ export default {
     },
 
     save(type: Number) {
+      if (type === 0) {
+        this.task.zone = this.zone1;
+      } else {
+        this.taskSolution.zone = this.zone2;
+      }
+
       var blob = new Blob(
         [
           type === 0

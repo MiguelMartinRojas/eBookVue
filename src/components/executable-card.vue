@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <md-card md-with-hover>
-      <md-card-header>
+      <md-card-header v-bind:class="{ 'border-red': this.task.zone ==='red', 'border-green': this.task.zone ==='green', 'border-blue': this.task.zone ==='blue', 'border-yellow': this.task.zone ==='yellow' }">
         <div v-if="!edition" class="md-title">{{task.title}}</div>
         <form v-else autocomplete="off">
           <md-field>
@@ -18,7 +18,7 @@
         </form>
       </md-card-header>
       <md-card-content>
-        <text-area :task="task" :solution="solution"  :edition="edition" :id="id"></text-area>
+        <text-area :task="task" :solution="solution" :edition="edition" :id="id"></text-area>
       </md-card-content>
       <md-card-actions>
         <md-button class="md-fab md-primary" v-if="!edition" v-on:click="back">
@@ -77,5 +77,17 @@ export default {
   text-align: left;
   white-space: pre-line;
   margin-left: 40px;
+}
+.border-red{
+  border: 2px red solid;
+}
+.border-green{
+  border: 2px green solid;
+}
+.border-yellow{
+  border: 2px yellow solid;
+}
+.border-blue{
+  border: 2px blue solid;
 }
 </style>
