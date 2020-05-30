@@ -23,7 +23,20 @@ const Broken = "../break.svg";
 const House1 = "../house1.svg";
 const House12 = "../house12.svg";
 const House13 = "../house13.svg";
+const House14 = "../house14.svg";
+const House15 = "../house15.svg";
+const House16 = "../house16.svg";
+const House17 = "../house17.svg";
+const House18 = "../house18.svg";
+const House19 = "../house19.svg";
+const House111 = "../house111.svg";
 const House2 = "../house2.svg";
+const House21 = "../house21.svg";
+const House22 = "../house22.svg";
+const House23 = "../house23.svg";
+const House41 = "../house41.svg";
+const House42 = "../house42.svg";
+const House43 = "../house43.svg";
 const Background = "../background.svg";
 
 const width = 800;
@@ -44,6 +57,28 @@ export default {
         scaleX: 0.75,
         scaleY: 0.75
       },
+      houseSmall: [
+        House1,
+        House12,
+        House13,
+        House14,
+        House15,
+        House16,
+        House18,
+        House19,
+        House111,
+      ],
+      houseMedium: [
+        House2,
+        House21,
+        House22,
+        House23,
+      ],
+      houseBig: [
+        House41,
+        House42,
+        House43,
+      ],
       pointsSmall: [
         { id: 1111, x: 220, y: -60, zone: "red", unlock: false },
         { id: 1112, x: 0, y: 0, zone: "red", unlock: false },
@@ -319,7 +354,10 @@ export default {
         if (task.building) this.destroyBuilding(task.building.id);
         task.building = {
           id: unlockedBuilding.id,
-          name: House12,
+          name: this.houseSmall[Math.floor(
+            Math.random() *
+              this.houseSmall.length
+          )],
           type: 2,
           zone: unlockedBuilding.zone
         };
@@ -343,7 +381,10 @@ export default {
         if (task.building) this.destroyBuilding(task.building.id);
         task.building = {
           id: unlockedBuilding.id,
-          name: House13,
+          name: this.houseMedium[Math.floor(
+            Math.random() *
+              this.houseMedium.length
+          )],
           type: 3,
           zone: area
         };
@@ -367,7 +408,10 @@ export default {
         if (task.building) this.destroyBuilding(task.building.id);
         task.building = {
           id: unlockedBuilding.id,
-          name: House2,
+          name: this.houseBig[Math.floor(
+            Math.random() *
+              this.houseBig.length
+          )],
           type: 4,
           zone: unlockedBuilding.zone
         };
