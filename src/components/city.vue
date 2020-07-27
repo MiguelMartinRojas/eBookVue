@@ -19,26 +19,26 @@
 import { eventHub } from "@/components/eventHub";
 import Konva from "konva";
 
-const Broken = "../break.svg";
-const House1 = "../house1.svg";
-const House12 = "../house12.svg";
-const House13 = "../house13.svg";
-const House14 = "../house14.svg";
-const House15 = "../house15.svg";
-const House16 = "../house16.svg";
-const House17 = "../house17.svg";
-const House18 = "../house18.svg";
-const House19 = "../house19.svg";
-const House111 = "../house111.svg";
-const House2 = "../house2.svg";
-const House21 = "../house21.svg";
-const House22 = "../house22.svg";
-const House23 = "../house23.svg";
-const House41 = "../house41.svg";
-const House42 = "../house42.svg";
-const House43 = "../house43.svg";
-const Background = "../background.svg";
-
+const Broken =      window.location.origin + window.location.pathname +"break.svg";
+const House1 =      window.location.origin + window.location.pathname +"house1.svg";
+const House12 =     window.location.origin + window.location.pathname +"house12.svg";
+const House13 =     window.location.origin + window.location.pathname +"house13.svg";
+const House14 =     window.location.origin + window.location.pathname +"house14.svg";
+const House15 =     window.location.origin + window.location.pathname +"house15.svg";
+const House16 =     window.location.origin + window.location.pathname +"house16.svg";
+const House17 =     window.location.origin + window.location.pathname +"house17.svg";
+const House18 =     window.location.origin + window.location.pathname +"house18.svg";
+const House19 =     window.location.origin + window.location.pathname +"house19.svg";
+const House111 =    window.location.origin + window.location.pathname +"house111.svg";
+const House2 =      window.location.origin + window.location.pathname +"house2.svg";
+const House21 =     window.location.origin + window.location.pathname +"house21.svg";
+const House22 =     window.location.origin + window.location.pathname +"house22.svg";
+const House23 =     window.location.origin + window.location.pathname +"house23.svg";
+const House41 =     window.location.origin + window.location.pathname +"house41.svg";
+const House42 =     window.location.origin + window.location.pathname +"house42.svg";
+const House43 =     window.location.origin + window.location.pathname +"house43.svg";
+const Background =  window.location.origin + window.location.pathname +"background.svg";
+//const Background =  require("./eBookVue/src/assets/background.svg");
 const width = 800;
 const height = 500;
 
@@ -156,8 +156,7 @@ export default {
         { id: 22, x: 0, y: 0, zone: "yellow", unlock: false },
         { id: 23, x: 0, y: 0, zone: "yellow", unlock: false },
         { id: 24, x: 0, y: 0, zone: "yellow", unlock: false },
-
-        { id: 25, x: 458, y: 52, zone: "green", unlock: false },
+        { id: 25, x: 450, y: 47, zone: "green", unlock: false },
         { id: 26, x: 0, y: 0, zone: "green", unlock: false },
         { id: 27, x: 0, y: 0, zone: "green", unlock: false },
         { id: 28, x: 0, y: 0, zone: "green", unlock: false },
@@ -165,8 +164,8 @@ export default {
         { id: 30, x: 0, y: 0, zone: "blue", unlock: false },
         { id: 31, x: 0, y: 0, zone: "blue", unlock: false },
         { id: 32, x: 0, y: 0, zone: "blue", unlock: false },
-        //second column
-        { id: 33, x: 329, y: -18, zone: "red", unlock: false },
+        // //second column
+        { id: 33, x: 325, y: -22, zone: "red", unlock: false },
         { id: 34, x: 0, y: 0, zone: "red", unlock: false }, //60, unlock: false,34
         { id: 35, x: 0, y: 0, zone: "red", unlock: false }, //65,, unlock: false 34
         { id: 36, x: 0, y: 0, zone: "red", unlock: false }, // 65,, unlock: false 34
@@ -175,7 +174,7 @@ export default {
         { id: 39, x: 0, y: 0, zone: "yellow", unlock: false },
         { id: 40, x: 0, y: 0, zone: "yellow", unlock: false },
 
-        { id: 41, x: 510, y: 95, zone: "green", unlock: false },
+        { id: 41, x: 510, y: 87, zone: "green", unlock: false },
         { id: 42, x: 0, y: 0, zone: "green", unlock: false },
         { id: 43, x: 0, y: 0, zone: "green", unlock: false },
         { id: 44, x: 0, y: 0, zone: "green", unlock: false },
@@ -183,8 +182,8 @@ export default {
         { id: 46, x: 0, y: 0, zone: "blue", unlock: false },
         { id: 47, x: 0, y: 0, zone: "blue", unlock: false },
         { id: 48, x: 0, y: 0, zone: "blue", unlock: false },
-        //Third
-        { id: 49, x: 390, y: 20, zone: "red", unlock: false },
+        // //Third
+        { id: 49, x: 386, y: 15, zone: "red", unlock: false },
         { id: 50, x: 0, y: 0, zone: "red", unlock: false }, //60,34
         { id: 51, x: 0, y: 0, zone: "red", unlock: false }, //65, 34
         { id: 52, x: 0, y: 0, zone: "red", unlock: false }, // 65, 34
@@ -193,7 +192,7 @@ export default {
         { id: 55, x: 0, y: 0, zone: "yellow", unlock: false },
         { id: 56, x: 0, y: 0, zone: "yellow", unlock: false },
 
-        { id: 57, x: 575, y: 130, zone: "green", unlock: false },
+        { id: 57, x: 575, y: 120, zone: "green", unlock: false },
         { id: 58, x: 0, y: 0, zone: "green", unlock: false },
         { id: 59, x: 0, y: 0, zone: "green", unlock: false },
         { id: 60, x: 0, y: 0, zone: "green", unlock: false },
@@ -237,7 +236,6 @@ export default {
     },
     addBackground() {
       var me = this;
-
       this.iconUrl;
       var a = Konva.Image.fromURL(Background, image => {
         me.$refs.backgroundlayer.getNode().add(image);
@@ -432,6 +430,16 @@ export default {
     },
     drawBuilding(building) {
       if (!building) return false;
+
+      //TESTING position
+      // this.pointsSmall.forEach(element => {
+      //     this.drawSmallBuilding({id: element.id, name: House1});  
+      // });
+      // this.pointsBig.forEach(element => {
+      //     this.drawBigBuilding({id: element.id, name: House14, zone: element.zone, type: 4});  
+      // });
+
+
       this.drawSmallBuilding(building);
       this.drawBigBuilding(building);
 
@@ -452,7 +460,7 @@ export default {
 
       var group = 0;
       var indexGroup = index;
-      if (building.id > 8111) {
+      if (building.id > 8114) {
         group = 32;
       }
       if (module === 0) {
@@ -528,6 +536,7 @@ export default {
         );
       }
     },
+
     destroyBuilding(id) {
       if (this.$refs.stage) {
         var node = this.$refs.stage.getNode().find("#" + id)[0];

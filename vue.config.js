@@ -1,5 +1,7 @@
 // vue.config.js
 module.exports = {
+    //uncomment this line for deploying in github pages.
+    publicPath: '/eBookVue/',
     chainWebpack: (config) => {
       const svgRule = config.module.rule('svg');
   
