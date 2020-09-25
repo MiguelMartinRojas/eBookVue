@@ -1,14 +1,30 @@
 
 <template>
   <div>
-    <div class="editor-container" style="margin-top: 5px;">
+    <div class="editor-container" style="margin-top: 5px">
       <!-- https://github.com/ajaxorg/ace -->
-      <editor v-model="inputContentJavacript" @init="initJavascriptEditor" lang="javascript"></editor>
-      <editor v-model="inputContentHtml" @init="initHtmlEditor" lang="html"></editor>
-      <editor v-model="inputContentCss" @init="initCssEditor" lang="css"></editor>
+      <editor
+        v-model="inputContentJavacript"
+        @init="initJavascriptEditor"
+        lang="javascript"
+      ></editor>
+      <editor
+        v-model="inputContentHtml"
+        @init="initHtmlEditor"
+        lang="html"
+      ></editor>
+      <editor
+        v-model="inputContentCss"
+        @init="initCssEditor"
+        lang="css"
+      ></editor>
     </div>
     <div class="output">
-      <iframe ref="iframe" style="border:none; width:100%" v-on:load="onLoadIframe"></iframe>
+      <iframe
+        ref="iframe"
+        style="border: none; width: 100%"
+        v-on:load="onLoadIframe"
+      ></iframe>
       <div id="error" class="error"></div>
     </div>
   </div>
@@ -52,23 +68,23 @@ export default {
       myEditorHtml: null,
       myEditorCss: null,
       result: "",
-      myTask: null
+      myTask: null,
     };
   },
   props: { task: {}, solution: {}, id: Number, edition: Boolean },
   watch: {
-    task: function(newVal, oldVal) {
-      this.cleanOutputIframe()
+    task: function (newVal, oldVal) {
+      this.cleanOutputIframe();
       this.myTask = newVal;
       if (!this.edition) {
         var game = JSON.parse(localStorage.getItem("game"));
-        if (game.find(element => element.title == this.inputTask.title)) {
+        if (game.find((element) => element.title == this.inputTask.title)) {
           this.inputTask = game.find(
-            element => element.title == this.inputTask.title
+            (element) => element.title == this.inputTask.title
           );
         }
       }
-    }
+    },
   },
   computed: {
     inputContentJavacript: {
@@ -77,7 +93,7 @@ export default {
       },
       set(val) {
         this.inputTask.contentJavascript = val;
-      }
+      },
     },
     inputContentHtml: {
       get() {
@@ -85,7 +101,7 @@ export default {
       },
       set(val) {
         this.inputTask.contentHtml = val;
-      }
+      },
     },
     inputContentCss: {
       get() {
@@ -93,7 +109,7 @@ export default {
       },
       set(val) {
         this.inputTask.contentCss = val;
-      }
+      },
     },
     inputTask: {
       get() {
@@ -101,11 +117,11 @@ export default {
       },
       set(val) {
         this.myTask = val;
-      }
-    }
+      },
+    },
   },
   components: {
-    editor: require("vue2-ace-editor")
+    editor: require("vue2-ace-editor"),
   },
   methods: {
     initJavascriptEditor(editor) {
@@ -135,13 +151,12 @@ export default {
       editor.setOptions({
         //fontFamily: "tahoma",
         fontSize: "12pt",
-        maxLines: Infinity
+        maxLines: Infinity,
       });
     },
     onLoadIframe() {},
     executeCode() {
-      this.overrideConsoleOutput(this.$refs.iframe.contentWindow);
-      this.overrideConsoleOutput(window);
+      this.cleanOutputIframe()
       var javacriptType = 'type="text/javascript"';
       var cssType = 'type="text/css"';
       let javascriptCode = this.myEditorJavascript.getValue();
@@ -152,7 +167,7 @@ export default {
       doc.open();
       doc.write(`<style ${cssType}>` + cssCode + "<" + "/style>");
       doc.write(`<h3> Salida:</h3><div>` + htmlCode + `<div>`);
-
+      this.overrideConsoleOutput(this.$refs.iframe.contentWindow);
       var solutionJavascript = "";
       if (this.solution) {
         solutionJavascript =
@@ -175,26 +190,21 @@ export default {
     },
     cleanOutputIframe() {
       var iframe = this.$refs.iframe;
+      var logger = document.querySelector("#error");
       var html = "";
-
+      logger.innerHTML = html;
       iframe.contentWindow.document.open();
       iframe.contentWindow.document.write(html);
       iframe.contentWindow.document.close();
     },
     overrideConsoleOutput(myWindow) {
-      // eslint-disable-next-line no-console
-      const originalConsoleError = myWindow.console.error;
-      // eslint-disable-next-line no-console
-      myWindow.error = function(...args) {
-        const myDiv = document.querySelector("#error");
-        // eslint-disable-next-line no-debugger
-        debugger;
-        if (myDiv) {
-          myDiv.textContent += args.join(" ");
-          myDiv.innerHTML += "<br>";
-        }
-        // call original method
-        return originalConsoleError.apply(this, args);
+      var logger = document.querySelector("#error");
+
+      myWindow.onerror = function myErrorHandler(errorMsg, url, lineNumber) {
+        logger.innerHTML +=
+          errorMsg + "\r\n" + "<br> Número de línea:" + lineNumber + "\r\n";
+        // eslint-disable-next-line no-console
+        console.error(errorMsg, url, lineNumber);
       };
     },
     setScore() {
@@ -206,14 +216,14 @@ export default {
         eventHub.$emit("unlock-building", {
           score: parseInt(score.innerText),
           area: this.inputTask.zone,
-          title: this.inputTask.title
+          title: this.inputTask.title,
         });
       }
     },
     insertOrReplaceTask() {
       var game = JSON.parse(localStorage.getItem("game"));
       var index = game.findIndex(
-        element => element.title == this.inputTask.title
+        (element) => element.title == this.inputTask.title
       );
       if (index !== -1) {
         game[index] = this.inputTask;
@@ -224,12 +234,12 @@ export default {
     },
     initializeGame() {
       var game = JSON.parse(localStorage.getItem("game"));
-      if (game.find(element => element.title == this.inputTask.title)) {
+      if (game.find((element) => element.title == this.inputTask.title)) {
         this.inputTask = game.find(
-          element => element.title == this.inputTask.title
+          (element) => element.title == this.inputTask.title
         );
       }
-    }
+    },
   },
   created() {
     eventHub.$on("execute-code-" + this.id, this.executeCode);
@@ -248,6 +258,6 @@ export default {
     if (!this.edition) {
       eventHub.$on("game-changed", this.initializeGame);
     }
-  }
+  },
 };
 </script>
